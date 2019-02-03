@@ -16,6 +16,7 @@ all query variables must be within double braces
 `{{ }}`
 
 everything within the double braces will be reproduced for the number of groups the query returns
+
 example:
 
 `{{ <p> $(hostname) has id of $(id) </p>}}`
