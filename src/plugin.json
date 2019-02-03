@@ -1,0 +1,24 @@
+{
+  "type": "panel",
+  "name": "Enriched Text",
+  "id": "campbellmbxj-enriched-text-panel",
+  "info": {
+    "description": "Template queries into text panel",
+    "author": {
+      "name": "CampbellMBXJ",
+      "url": ""
+    },
+    "keywords": ["enriched", "text", "panel" ],
+    "logos": { },
+    "links": [ 
+      {"name": "Project site", "url": "https://github.com/CampbellMBXJ/grafana-enriched-text-plugin.git"}
+    ],
+    "screenshots": [ ],
+    "version": "0.0.1",
+    "updated": "2018-02-03"
+  },
+  "dependencies": {
+    "grafanaVersion": "4.6.x",
+    "plugins": [ ]
+  }
+}
