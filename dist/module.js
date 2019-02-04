@@ -1,4 +1,4 @@
-define(["lodash","app/plugins/sdk"], function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) { return /******/ (function(modules) { // webpackBootstrap
+define(["app/plugins/sdk","lodash"], function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_1__) { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -146,6 +146,7 @@ var TagCtrl = exports.TagCtrl = function (_MetricsPanelCtrl) {
     }, {
         key: 'onDataReceived',
         value: function onDataReceived(data) {
+            console.log(data);
             this.data = data;
             this.parseContent(this.panel.content, this.data);
         }
@@ -212,7 +213,8 @@ var TagCtrl = exports.TagCtrl = function (_MetricsPanelCtrl) {
             var allLines = "";
             var tags = [];
             for (var i = 0; i < data.length; i++) {
-                var tag = data[i].target.split(" ")[0].split(".")[1];
+                var tag = data[i].target.split(" ")[0].split(".");
+                tag = tag[tag.length - 1];
                 if (!tags.includes(tag)) {
                     tags.push(tag);
                 } else {
@@ -306,4 +308,3 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
 /***/ })
 /******/ ])});;
-//# sourceMappingURL=module.js.map

@@ -47,6 +47,7 @@ export class TagCtrl extends MetricsPanelCtrl {
     }
 
     onDataReceived(data) {
+        console.log(data);
         this.data = data;
         this.parseContent(this.panel.content, this.data);
     }
@@ -109,7 +110,8 @@ export class TagCtrl extends MetricsPanelCtrl {
         let allLines = "";
         let tags = [];
         for (let i = 0; i < data.length; i++) {
-            let tag = data[i].target.split(" ")[0].split(".")[1];
+            let tag = data[i].target.split(" ")[0].split(".");
+            tag = tag[tag.length-1];
             if (!tags.includes(tag)) {
                 tags.push(tag);
             } else {
