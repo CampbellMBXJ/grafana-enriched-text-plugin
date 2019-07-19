@@ -119,16 +119,6 @@ var TagCtrl = exports.TagCtrl = function (_MetricsPanelCtrl) {
         _this.events.on('init-edit-mode', _this.onInitEditMode.bind(_this));
         _this.events.on('refresh', _this.onRefresh.bind(_this));
         _this.events.on('render', _this.onRender.bind(_this));
-        // let renderWhenChanged = function(scope) {
-        //     let panel = scope.ctrl.panel;
-        //     return [
-        //         panel.content,
-        //         panel.mode
-        //     ].join();
-        // };
-        // $scope.$watch(renderWhenChanged, _.throttle(function() {
-        //     this.render();
-        // }, 100));
         return _this;
     }
 
@@ -146,7 +136,6 @@ var TagCtrl = exports.TagCtrl = function (_MetricsPanelCtrl) {
     }, {
         key: 'onDataReceived',
         value: function onDataReceived(data) {
-            console.log(data);
             this.data = data;
             this.parseContent(this.panel.content, this.data);
         }
@@ -157,11 +146,33 @@ var TagCtrl = exports.TagCtrl = function (_MetricsPanelCtrl) {
                 return dataLine.datapoints[0][0];
             } else if (mod === "max") {
                 var max = [-Infinity];
-                for (var point in dataLine.datapoints) {
-                    if (dataLine.datapoints[point][0] > max) {
-                        max = dataLine.datapoints[point];
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = dataLine.datapoints[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var point = _step.value;
+
+                        if (point[0] > max) {
+                            max = point;
+                        }
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
                     }
                 }
+
                 return max[0];
             }
         }
@@ -173,10 +184,8 @@ var TagCtrl = exports.TagCtrl = function (_MetricsPanelCtrl) {
     }, {
         key: 'getLine',
         value: function getLine() {
-            var start = 0;
-            var end = 0;
-            start = this.panel.content.indexOf("{{");
-            end = this.panel.content.indexOf("}}");
+            var start = this.panel.content.indexOf("{{");
+            var end = this.panel.content.indexOf("}}");
             return [start + 2, end];
         }
     }, {
@@ -184,7 +193,6 @@ var TagCtrl = exports.TagCtrl = function (_MetricsPanelCtrl) {
         value: function getTag(line, tag) {
             var start = 0;
             var end = 0;
-            var middle = 0;
             while (start != -1) {
                 start = line.indexOf("$(", start + 3);
                 if (start != -1) {
@@ -240,7 +248,7 @@ var TagCtrl = exports.TagCtrl = function (_MetricsPanelCtrl) {
             }
 
             if (this.panel.data === undefined) {
-                this.panel.data === this.panelDefaults.data;
+                this.panel.data = this.panelDefaults.data;
             }
         }
     }, {

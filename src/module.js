@@ -25,16 +25,6 @@ export class TagCtrl extends MetricsPanelCtrl {
         this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
         this.events.on('refresh', this.onRefresh.bind(this));
         this.events.on('render', this.onRender.bind(this));
-        // let renderWhenChanged = function(scope) {
-        //     let panel = scope.ctrl.panel;
-        //     return [
-        //         panel.content,
-        //         panel.mode
-        //     ].join();
-        // };
-        // $scope.$watch(renderWhenChanged, _.throttle(function() {
-        //     this.render();
-        // }, 100));
     }
 
     onRefresh() {
@@ -47,7 +37,6 @@ export class TagCtrl extends MetricsPanelCtrl {
     }
 
     onDataReceived(data) {
-        console.log(data);
         this.data = data;
         this.parseContent(this.panel.content, this.data);
     }
@@ -57,9 +46,9 @@ export class TagCtrl extends MetricsPanelCtrl {
             return dataLine.datapoints[0][0];
         } else if (mod === "max") {
             let max = [-Infinity];
-            for (let point in dataLine.datapoints) {
-                if (dataLine.datapoints[point][0] > max) {
-                    max = dataLine.datapoints[point];
+            for (const point of dataLine.datapoints) {
+                if (point[0] > max) {
+                    max = point;
                 }
             }
             return max[0]
@@ -72,17 +61,14 @@ export class TagCtrl extends MetricsPanelCtrl {
     }
 
     getLine() {
-        let start = 0;
-        let end = 0;
-        start = this.panel.content.indexOf("{{");
-        end = this.panel.content.indexOf("}}")
+        const start = this.panel.content.indexOf("{{");
+        const end = this.panel.content.indexOf("}}");
         return [start + 2, end]
     }
 
     getTag(line, tag) {
         let start = 0;
         let end = 0;
-        let middle = 0;
         while (start != -1) {
             start = line.indexOf("$(", start + 3);
             if (start != -1) {
@@ -105,7 +91,7 @@ export class TagCtrl extends MetricsPanelCtrl {
     }
 
     parseContent(content, data) {
-        let line = this.getLine();
+        const line = this.getLine();
         let newLine = content.substring(line[0], line[1]);
         let allLines = "";
         let tags = [];
@@ -136,7 +122,7 @@ export class TagCtrl extends MetricsPanelCtrl {
         }
 
         if (this.panel.data === undefined) {
-            this.panel.data === this.panelDefaults.data;
+            this.panel.data = this.panelDefaults.data;
         }
     }
 
